@@ -14,21 +14,46 @@ namespace W
 
     public partial class Form1 : Form
     {
-
-
+        int[][] n;
+        int[][] i_block;
+        Rectangle rectangle;
+        Rectangle rectangle2;
+        Brush i_color = new SolidBrush(Color.DeepSkyBlue);
+        Brush blackPen = new SolidBrush(Color.Black);
 
 
         public Form1()
         {
             InitializeComponent();
 
+            n = new int[][]{
+                new int[] {99,99,99, 1, 1, 1, 1,99,99,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
+                new int[] {99,98,98,98,98,98,98,98,98,99 }
 
+            };
 
-
-
-
+            i_block = new int[][] {
+                      new int[] {0,9,0,0},
+                      new int[] {0,9,0,0},
+                      new int[] {0,9,0,0},
+                      new int[] {0,9,0,0}
+            };
 
         }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -36,62 +61,19 @@ namespace W
         }
 
 
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             // Create pen.
-            Brush i_color = new SolidBrush(Color.DeepSkyBlue);
-            Brush blackPen = new SolidBrush(Color.Black);
-            Rectangle rectangle;
-            Rectangle rectangle2;
 
-            int[][] n = new int[][]{
-                new int[] {99,2,2,1,1,1,1,2,2,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,1,1,1,1,1,1,1,1,2 },
-                new int[] {2,2,2,2,2,2,2,2,2,2 }
-                
+             i_color = new SolidBrush(Color.DeepSkyBlue);
+             blackPen = new SolidBrush(Color.Black);
 
-
-
-            };
-
-            int[][] i_block = new int[][] {
-                new int[] {0,9,0,0},
-                new int[] {0,9,0,0},
-                new int[] {0,9,0,0},
-                new int[] {0,9,0,0}
-
-
-
-            };
-
-            //int[][] a = new int[][] {
-            //    new int[] { 0, 1 },
-            //    new int[] { 2 },
-            //    new int[] { 3, 4, 5, 6 }
-            //};
-
-            // Create pen.
-            
-
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 10; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 15; j++)
                 {
 
-                    if (n[j][i] == 2)
+                    if (n[j][i] > 90 )
                     {
                         rectangle = new Rectangle(i * 35 + 10, j * 35 + 10, 30, 30);
 
@@ -103,13 +85,11 @@ namespace W
                 
 
             }
-               
-
+            
             for (int i2 = 0; i2 < 4; i2++)
             {
                 for (int j2 = 0; j2 < 4; j2++)
                 {
-
                     if (i_block[j2][i2] == 9)
                     {
                         rectangle2 = new Rectangle(i2 * 35+10 , j2 * 35 + 10, 30, 30);
@@ -118,12 +98,6 @@ namespace W
 
                     }
                 }
-
-
-
-
-               
-
 
             }
             
