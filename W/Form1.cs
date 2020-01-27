@@ -10,8 +10,24 @@ using System.Windows.Forms;
 
 namespace W
 {
-
-
+    // start postionを設定する
+    // time tick みたいなイベントを使う。
+    // paint event　のなんかイベントあーぐすがいらないやつを使う。
+    // 開始位置
+    // time tick で↑を呼び出す。
+    // key press -> 回転させる.
+    // key press -> 移動
+    // 境界判定
+    // hard drop
+    // 時間ごと現在位置
+    // 次のブロックに移る判定
+    // 床に設置判定
+    // 壁に当たり判定
+    // 上にいい感じに積む判定
+    // 一列1以外になった時消す判定
+    // 消したとき落とす操作
+    // 予約ブロック
+    // 
     public partial class Form1 : Form
     {
         int[][] n;
@@ -72,7 +88,6 @@ namespace W
             {
                 for (int j = 0; j < 15; j++)
                 {
-
                     if (n[j][i] > 90 )
                     {
                         rectangle = new Rectangle(i * 35 + 10, j * 35 + 10, 30, 30);
@@ -80,10 +95,7 @@ namespace W
                         e.Graphics.FillRectangle(blackPen, rectangle);
 
                     }
-
                 }
-                
-
             }
             
             for (int i2 = 0; i2 < 4; i2++)
