@@ -48,30 +48,31 @@ namespace W
         Brush fnt_color = new SolidBrush(Color.Red);
         Brush blackPen = new SolidBrush(Color.Black);
         // 開始位置xy 順番は原則y -> x for の順番と同じにするため
-        int st_position_y = 0;
-        int st_position_x = 1;
-
-
+        const int st_position_y = 0;
+        const int st_position_x = 2;
+        // 現在地の設定
+        int now_position_y = st_position_y;
+        int now_position_x = st_position_x;
         public Form1()
         {
             InitializeComponent();
 
             n = new int[][]{
-                new int[] {99 ,1, 1, 1, 1, 1, 1, 1, 1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99 },
-                new int[] {99,98,98,98,98,98,98,98,98,99 }
+                new int[] {99,99 ,1, 1, 1, 1, 1, 1, 1, 1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1,99,99,99 },
+                new int[] {99,99,98,98,98,98,98,98,98,98,99,99,99 }
 
             };
 
@@ -87,42 +88,81 @@ namespace W
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            field_change("");
+        }
+
+        private void field_change(string vector) {
             //　ここをtickで呼んでやる。
             Boolean is_not_move = false;
-            int now_position_y = st_position_y;
-            int now_position_x = st_position_x;
+            
+            this.Text = now_position_x.ToString();
             // blockを配列に追加
             //まず範囲確認します。4*4入るスペースあるかの確認
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    //                         ↓この１はブロックの一つ下のマスのこと
-                    if (n[now_position_y + i + 1][now_position_x + j] > 90) {
-                        is_not_move = true;
+            if (vector != "")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    // kuso cooooode
+                    for (int j = 0; j < 4; j++)
+                    {
+                        try
+                        {
+                            if (vector == "right" && n[now_position_y + i][now_position_x + j + 1] + i_block[i][j] > 100) {
+                                is_not_move = true;
+                            }
+                            if (vector == "left" && n[now_position_y + i][now_position_x + j - 1] + i_block[i][j] > 100) {
+                                is_not_move = true;
+                            }
+                            //                         ↓この１はブロックの一つ下のマスのこと
+                            if (n[now_position_y + i + 1][now_position_x + j] + i_block[i][j] > 100)
+                            {
+                                is_not_move = true;
+                            }
+                        
+                        }
+                        catch
+                        {
+
+                            break;
+
+                        }
+
                     }
                 }
             }
             //可能だった場合置き換えをする。
             if (is_not_move) return;
+            this.Text = "move";
             // 初回はこれいらない
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    for (int j = 0; j < 4; j++)
-            //    {
-            //        n[now_position_y + i][now_position_x + j] -= i_block[i][j];
-            //    }
-            //}
-            // now_position_y += 1;
+            if (vector != "")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        n[now_position_y + i][now_position_x + j] -= i_block[i][j];
+                    }
+                }
+            }
+            // time tick の時はdown で呼び出す。
+            if (vector == "down") now_position_y += 1;
+            if (vector == "right") now_position_x += 1;
+            if (vector == "left") now_position_x -= 1;
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    n[now_position_y + i][now_position_x + j] += i_block[i][j];
-                    //                                       todo:: ↑このブロックはそのうちnow_blockとかに直したい
-                }
+                    try
+                    {
+                        n[now_position_y + i][now_position_x + j] += i_block[i][j];
+                        //                                       todo:: ↑このブロックはそのうちnow_blockとかに直したい
+
+                    }
+                    catch { break; }
+                 }
             }
-
-            
-
+            Invalidate();
+            is_not_move = false;
         }
 
         // https://so-zou.jp/software/tech/programming/c-sharp/graphics/ 自作関数で使用　-> tick で使用したい　-> tick では配列の移動のみ
@@ -130,13 +170,13 @@ namespace W
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             // 色の作成
-             i_color = new SolidBrush(Color.DeepSkyBlue);
+            i_color = new SolidBrush(Color.DeepSkyBlue);
             fnt_color = new SolidBrush(Color.Red);
             blackPen = new SolidBrush(Color.Black);
             // フィールドの設定
             for (int i = 0; i < 15; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 1; j < 11; j++)
                 {
                     
                     rectangle = new Rectangle(j * 35 + 10, i * 35 + 10, 30, 30);
@@ -159,6 +199,17 @@ namespace W
             }
         }
 
-
+        // 左右移動したい。
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode) {
+                case Keys.Right:
+                    field_change("right");
+                    break;
+                case Keys.Left:
+                    field_change("left");
+                    break;
+            }
+        }
     }
 }
